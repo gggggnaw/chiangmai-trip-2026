@@ -163,6 +163,58 @@
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
   ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
 
+  /* ===== 分頁 Tabs ===== */
+  .tabbar {
+    position: sticky; top: 0; z-index: 40;
+    display: flex; gap: 6px; justify-content: center;
+    padding: 10px; margin: 0 auto; max-width: 900px;
+    background: rgba(255,255,255,0.6); backdrop-filter: blur(18px) saturate(180%);
+    -webkit-backdrop-filter: blur(18px) saturate(180%);
+    border-bottom: 1px solid var(--border);
+  }
+  html[data-theme="dark"] .tabbar { background: rgba(20,20,28,0.6); }
+  .tabbar button {
+    -webkit-appearance: none; appearance: none; border: 0; cursor: pointer;
+    padding: 9px 20px; border-radius: 999px; font-size: 0.92rem; font-weight: 600;
+    font-family: inherit; color: var(--text-light); background: transparent;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform .12s var(--spring), background .3s ease, color .3s ease;
+  }
+  .tabbar button:active { transform: scale(.95); }
+  .tabbar button[aria-selected="true"] { background: var(--teal); color: #fff; box-shadow: 0 4px 14px rgba(45,106,79,.35); }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; animation: fadeUp .5s var(--spring) both; }
+  /* ===== 地圖分頁 ===== */
+  .map-embed { position: relative; width: 100%; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); background: var(--surface-2); }
+  .map-embed iframe { display: block; width: 100%; height: 460px; border: 0; }
+  .map-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0 4px; }
+  .map-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 12px; background: var(--teal); color: #fff; font-weight: 600; font-size: .9rem; text-decoration: none; box-shadow: var(--shadow); transition: transform .3s var(--spring), box-shadow .3s; }
+  .map-btn.alt { background: var(--surface); color: var(--heading); border: 1px solid var(--border); }
+  .map-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,.14); }
+  /* ===== 地點篩選 ===== */
+  .filter-bar { display: flex; flex-direction: column; gap: 12px; margin: 22px 0 16px; }
+  .filter-search { display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 10px 14px; box-shadow: var(--shadow); }
+  .filter-search input { flex: 1; border: 0; background: transparent; font-family: inherit; font-size: .95rem; color: var(--text); outline: none; }
+  .filter-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    -webkit-appearance: none; appearance: none; cursor: pointer; font-family: inherit;
+    padding: 6px 14px; border-radius: 999px; font-size: .8rem; font-weight: 600;
+    border: 1px solid var(--border); background: var(--surface); color: var(--text-light);
+    -webkit-tap-highlight-color: transparent; transition: transform .12s var(--spring), background .25s, color .25s, border-color .25s;
+  }
+  .chip:active { transform: scale(.94); }
+  .chip[aria-pressed="true"] { background: var(--gold); border-color: var(--gold); color: #402d00; }
+  .places-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .place-card { display: flex; gap: 12px; align-items: flex-start; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px; box-shadow: var(--shadow); text-decoration: none; color: inherit; transition: transform .3s var(--spring), box-shadow .3s; }
+  .place-card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(0,0,0,.13); }
+  .place-card .p-ico { font-size: 1.5rem; line-height: 1; flex-shrink: 0; }
+  .place-card .p-name { font-size: .98rem; font-weight: 700; color: var(--heading); }
+  .place-card .p-cat { font-size: .74rem; color: var(--text-light); margin-top: 2px; }
+  .place-card .p-note { font-size: .78rem; color: var(--text-light); margin-top: 5px; line-height: 1.5; }
+  .place-card .p-go { margin-left: auto; align-self: center; color: var(--teal); font-size: 1.1rem; flex-shrink: 0; }
+  .filter-empty { text-align: center; color: var(--text-light); font-size: .9rem; padding: 24px; display: none; }
+  @media (max-width: 640px) { .places-grid { grid-template-columns: 1fr; } .map-embed iframe { height: 380px; } }
+
   /* ===== 旅伴 Travelers ===== */
   .travelers-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 20px 0; }
   .traveler-card {
@@ -382,6 +434,13 @@
 </div>
 
 <div class="container">
+
+<div class="tabbar" role="tablist" aria-label="頁面分頁">
+  <button role="tab" id="tab-trip" aria-controls="panel-trip" aria-selected="true" data-tab="trip">🗓️ 行程</button>
+  <button role="tab" id="tab-map" aria-controls="panel-map" aria-selected="false" data-tab="map">🗺️ 地圖清單</button>
+</div>
+
+<div class="tab-panel active" id="panel-trip" role="tabpanel" aria-labelledby="tab-trip">
 
 <div class="flight-section">
   <div class="flight-grid">
@@ -860,6 +919,37 @@
     <li><strong>機場時間：</strong>回程航班 21:20，建議 18:00 前抵達機場還車並辦理登機。</li>
   </ul>
 </div>
+</div><!-- /panel-trip -->
+
+<div class="tab-panel" id="panel-map" role="tabpanel" aria-labelledby="tab-map">
+  <div class="section-title"><div class="dot"></div>我的清邁地圖清單</div>
+  <p style="font-size:0.88rem;color:var(--text-light);margin:-8px 0 14px;">收藏的口袋名單 — 用下方搜尋與分類快速篩選，點卡片直接開 Google Maps 導航。</p>
+  <div class="map-embed">
+    <iframe src="https://www.google.com/maps?q=Chiang+Mai,+Thailand&z=11&output=embed" title="清邁地圖" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+  </div>
+  <div class="map-actions">
+    <a class="map-btn" href="https://maps.app.goo.gl/fupMH6ib5CH3QkLJ6?g_st=i" target="_blank" rel="noopener">📍 開啟我的完整清單</a>
+    <a class="map-btn alt" href="https://www.google.com/maps/search/?api=1&query=Chiang+Mai" target="_blank" rel="noopener">🧭 在 Google Maps 開清邁</a>
+  </div>
+
+  <div class="filter-bar">
+    <div class="filter-search">
+      <span aria-hidden="true">🔎</span>
+      <input type="search" id="placeSearch" placeholder="搜尋地點名稱…" aria-label="搜尋地點">
+    </div>
+    <div class="filter-chips" id="placeChips" role="group" aria-label="分類篩選">
+      <button class="chip" data-cat="all" aria-pressed="true">全部</button>
+      <button class="chip" data-cat="cafe" aria-pressed="false">☕ 咖啡</button>
+      <button class="chip" data-cat="food" aria-pressed="false">🍜 美食</button>
+      <button class="chip" data-cat="sight" aria-pressed="false">🏛️ 景點</button>
+      <button class="chip" data-cat="nature" aria-pressed="false">🌿 自然</button>
+      <button class="chip" data-cat="market" aria-pressed="false">🛍️ 市集</button>
+      <button class="chip" data-cat="stay" aria-pressed="false">🏨 住宿</button>
+    </div>
+  </div>
+  <div class="places-grid" id="placesGrid"></div>
+  <div class="filter-empty" id="filterEmpty">沒有符合的地點，換個關鍵字或分類試試。</div>
+</div><!-- /panel-map -->
 
 <div class="footer">
   清邁 5 日 4 夜自駕遊行程 · 2026 年 9 月 · 杭東農莊體驗版<br>
@@ -877,6 +967,37 @@ function toggleDay(header) {
   if (!wasOpen) card.classList.add('open');
   card.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
+
+var PLACES_DATA = [
+  { cat:'stay', name:'The Earth Hotel', q:'The Earth Hotel Chiang Mai', note:'前兩晚 · Huai Kaew 路，近寧曼與古城' },
+  { cat:'stay', name:'Veranda High Resort', q:'Veranda High Resort Chiang Mai MGallery', note:'後兩晚 · 杭東稻田山景度假村' },
+  { cat:'sight', name:'塔佩門 Tha Phae Gate', q:'Tha Phae Gate', note:'古城紅磚地標，打卡熱點' },
+  { cat:'nature', name:'惠東濤湖 Huay Tung Tao', q:'Huay Tung Tao Lake', note:'素帖山腳竹亭湖景，chill 放空' },
+  { cat:'market', name:'清邁夜市 Night Bazaar', q:'Chiang Mai Night Bazaar', note:'長康路每日夜市' },
+  { cat:'nature', name:'Big Boy 大象保護區', q:'Big Boy Elephant Sanctuary Chiang Mai', note:'道德保育 · Doi Inthanon 附近' },
+  { cat:'market', name:'瓦洛洛市場 Warorot', q:'Warorot Market', note:'最古老傳統市場，伴手禮划算' },
+  { cat:'food', name:'Huen Muan Jai', q:'Huen Muan Jai', note:'米其林推薦泰北菜，建議訂位' },
+  { cat:'food', name:'Ohkajhu Nim City', q:'Ohkajhu Nim City', note:'三兄弟有機農場餐廳' },
+  { cat:'market', name:'班達歪木雕村 Baan Tawai', q:'Baan Tawai Village', note:'杭東手工藝集散地' },
+  { cat:'food', name:'Khaomao-Khaofang 森林餐廳', q:'Khaomao Khaofang Imaginary Jungle', note:'夢幻森林景觀餐廳' },
+  { cat:'market', name:'One Nimman / Maya', q:'One Nimman', note:'寧曼路商場，雨天避雨' },
+  { cat:'market', name:'周六夜市 Wua Lai', q:'Wua Lai Walking Street', note:'古城南門手工藝夜市' },
+  { cat:'market', name:'真心市集 Jing Jai', q:'Jing Jai Market', note:'週末文創農產市集' },
+  { cat:'cafe', name:'Fern Forest Cafe', q:'Fern Forest Cafe Chiang Mai', note:'古城祕境花園咖啡' },
+  { cat:'cafe', name:'MARS.cnx', q:'MARS.cnx cafe', note:'火星主題咖啡廳' },
+  { cat:'nature', name:'Bua Tong 黏腳瀑布', q:'Bua Tong Sticky Waterfall', note:'可赤腳攀爬的石灰岩瀑布' },
+  { cat:'market', name:'周日夜市 Sunday Walking Street', q:'Sunday Walking Street Chiang Mai', note:'古城最大夜市' },
+  { cat:'cafe', name:'Fernpresso at Lake', q:'Fernpresso at Lake Chiang Mai', note:'湖畔咖啡 · Affogato' },
+  { cat:'food', name:'Khao-Sō-i 泰北咖哩麵', q:'Khao Soi Mae Sai', note:'告別必吃國民美食' },
+  { cat:'cafe', name:'Ristr8to Lab', q:'Ristr8to Lab', note:'世界拉花冠軍店' },
+  { cat:'cafe', name:'Graph Cafe', q:'Graph Cafe Chiang Mai', note:'古城創意特調名店' },
+  { cat:'cafe', name:'Baan Kang Wat 藝術村', q:'Baan Kang Wat', note:'文青藝術村咖啡聚落' },
+  { cat:'cafe', name:'The Barisotel by The Baristro', q:'The Barisotel Baristro', note:'白色美學濱河咖啡' },
+  { cat:'cafe', name:'No.39 Cafe', q:'No.39 Cafe Chiang Mai', note:'叢林祕境花園咖啡' },
+  { cat:'cafe', name:'Akha Ama Coffee', q:'Akha Ama Coffee', note:'阿卡族社企自家烘焙' },
+  { cat:'food', name:'Cherng Doi 烤雞', q:'Cherng Doi Roast Chicken', note:'必比登推薦烤雞' },
+  { cat:'sight', name:'帕邢寺 Wat Phra Singh', q:'Wat Phra Singh', note:'古城代表性寺廟' }
+];
 
 document.addEventListener('DOMContentLoaded', function () {
   // ===== 主題切換：淺色 / 跟隨系統 / 深色 =====
@@ -934,6 +1055,61 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
   els.forEach(function (e) { io.observe(e); });
+
+  // ===== 分頁切換 Tabs =====
+  (function () {
+    var tabs = document.querySelectorAll('.tabbar [role="tab"]');
+    var panels = { trip: document.getElementById('panel-trip'), map: document.getElementById('panel-map') };
+    tabs.forEach(function (t) {
+      t.addEventListener('click', function () {
+        var key = t.getAttribute('data-tab');
+        tabs.forEach(function (x) { x.setAttribute('aria-selected', x === t ? 'true' : 'false'); });
+        Object.keys(panels).forEach(function (k) { panels[k].classList.toggle('active', k === key); });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+  })();
+
+  // ===== 地點篩選 Places filter =====
+  (function () {
+    var grid = document.getElementById('placesGrid');
+    if (!grid) return;
+    var q = function (name) { return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(name + ' Chiang Mai'); };
+    var places = PLACES_DATA;
+    var catLabel = { cafe:'咖啡', food:'美食', sight:'景點', nature:'自然', market:'市集', stay:'住宿' };
+    var icon = { cafe:'☕', food:'🍜', sight:'🏛️', nature:'🌿', market:'🛍️', stay:'🏨' };
+    grid.innerHTML = places.map(function (p) {
+      return '<a class="place-card" data-cat="' + p.cat + '" data-name="' + p.name.toLowerCase() + '" href="' + q(p.q || p.name) + '" target="_blank" rel="noopener">' +
+        '<span class="p-ico">' + icon[p.cat] + '</span>' +
+        '<span><span class="p-name">' + p.name + '</span>' +
+        '<span class="p-cat">' + catLabel[p.cat] + '</span>' +
+        (p.note ? '<span class="p-note">' + p.note + '</span>' : '') + '</span>' +
+        '<span class="p-go" aria-hidden="true">›</span></a>';
+    }).join('');
+    var cards = Array.prototype.slice.call(grid.children);
+    var empty = document.getElementById('filterEmpty');
+    var search = document.getElementById('placeSearch');
+    var chips = document.querySelectorAll('#placeChips .chip');
+    var curCat = 'all', curText = '';
+    function apply() {
+      var shown = 0;
+      cards.forEach(function (c) {
+        var okCat = curCat === 'all' || c.getAttribute('data-cat') === curCat;
+        var okTxt = !curText || c.getAttribute('data-name').indexOf(curText) > -1;
+        var vis = okCat && okTxt;
+        c.style.display = vis ? '' : 'none';
+        if (vis) shown++;
+      });
+      empty.style.display = shown ? 'none' : 'block';
+    }
+    chips.forEach(function (ch) {
+      ch.addEventListener('click', function () {
+        chips.forEach(function (x) { x.setAttribute('aria-pressed', x === ch ? 'true' : 'false'); });
+        curCat = ch.getAttribute('data-cat'); apply();
+      });
+    });
+    search.addEventListener('input', function () { curText = search.value.trim().toLowerCase(); apply(); });
+  })();
 });
 </script>
 
