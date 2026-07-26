@@ -107,7 +107,15 @@
   .timeline-time { display: inline-block; background: var(--cream); padding: 2px 10px; border-radius: 6px; font-size: 0.78rem; font-weight: 600; color: var(--teal); margin-bottom: 6px; }
   .timeline-title { font-size: 1.05rem; font-weight: 700; color: var(--heading); margin-bottom: 4px; }
   .timeline-desc { font-size: 0.9rem; color: var(--text-light); line-height: 1.6; }
-  .timeline-img { width: 100%; height: 200px; object-fit: cover; border-radius: 10px; margin-top: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .timeline-img { width: 100%; height: 200px; object-fit: cover; border-radius: 10px; margin-top: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); cursor: zoom-in; transition: transform .3s var(--spring); }
+  .timeline-img:hover { transform: scale(1.01); }
+  .elephant-img, .food-card img { cursor: zoom-in; }
+  /* ===== 圖片全圖檢視 Lightbox ===== */
+  .lightbox { position: fixed; inset: 0; z-index: 90; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(0,0,0,0.82); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); opacity: 0; pointer-events: none; transition: opacity .3s ease; cursor: zoom-out; }
+  .lightbox.open { opacity: 1; pointer-events: auto; }
+  .lightbox img { max-width: 96vw; max-height: 92vh; width: auto; height: auto; object-fit: contain; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); transform: scale(.92); transition: transform .35s var(--spring); }
+  .lightbox.open img { transform: scale(1); }
+  .lightbox .lb-close { position: fixed; top: 18px; right: 22px; font-size: 2rem; line-height: 1; color: #fff; opacity: .85; cursor: pointer; user-select: none; }
   .timeline-tags { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
   .tag { font-size: 0.72rem; padding: 3px 10px; border-radius: 20px; font-weight: 500; }
   .tag-food { background: #fff3e0; color: #e65100; }
@@ -704,7 +712,7 @@
     <div class="day-info">
       <div class="date">9/13（日）</div>
       <div class="title">真心市集 · 黏腳瀑布 · 周日夜市</div>
-      <div class="theme">Jing Jai Market → Fern Forest Cafe → Bua Tong → Sunday Walking Street</div>
+      <div class="theme">Veranda 早餐 → Jing Jai Market → Fern Forest Cafe → Bua Tong → Sunday Walking Street</div>
     </div>
     <div class="day-toggle">▼</div>
   </div>
@@ -713,23 +721,23 @@
       <div class="hotel-banner">🏨 宿：Veranda High Resort（第 2 晚 · 杭東；今日北上市集與瀑布，晚間南返度假村）</div>
       <div class="timeline">
         <div class="timeline-item">
-          <div class="timeline-time">07:00 – 09:30</div>
+          <div class="timeline-time">07:30 – 08:30</div>
+          <div class="timeline-title">Veranda 度假村早餐</div>
+          <div class="timeline-desc">在 Veranda High Resort 享用度假村早餐，坐擁稻田與山景，悠閒開啟一天。用完餐再驅車北上前往真心市集。</div>
+          <div class="timeline-tags"><span class="tag tag-farm">度假村早餐</span></div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">09:00 – 10:30</div>
           <div class="timeline-title">真心市集 Jing Jai Market</div>
-          <div class="timeline-desc">清邁最具人氣的假日文創市集，僅週末 06:30–15:00 開放。前半區為農產品與小農攤位，後半區為文創手作與輕食。建議 8 點左右抵達避開人潮。開車約 10 分鐘。</div>
+          <div class="timeline-desc">清邁最具人氣的假日文創市集，僅週末 06:30–15:00 開放。前半區為農產品與小農攤位，後半區為文創手作與輕食。自 Veranda 北上約 30 分鐘。</div>
           <img class="timeline-img" src="https://kimi-web-img.moonshot.cn/img/api.tourismthailand.org/97aa6c24386b2e4d01c91abaed5a20392defcaa8.png" alt="真心市集">
           <div class="timeline-tags"><span class="tag tag-market">週末限定</span></div>
         </div>
         <div class="timeline-item">
-          <div class="timeline-time">10:00 – 11:15</div>
+          <div class="timeline-time">11:00 – 12:15</div>
           <div class="timeline-title">Fern Forest Cafe 蕨森林花園咖啡</div>
-          <div class="timeline-desc">古城巷弄裡的祕境花園咖啡，蕨類與熱帶綠植環繞木屋庭院，流水造景與斑駁光影，是清邁最療癒的老宅咖啡之一。招牌蛋糕（香蕉蛋糕、抹茶千層）與手沖單品口碑極佳，午前時段人少最愜意。距真心市集自駕約 12 分鐘。</div>
+          <div class="timeline-desc">古城巷弄裡的祕境花園咖啡，蕨類與熱帶綠植環繞木屋庭院，流水造景與斑駁光影，是清邁最療癒的老宅咖啡之一。招牌蛋糕（香蕉蛋糕、抹茶千層）與手沖單品口碑極佳。距真心市集自駕約 12 分鐘。</div>
           <div class="timeline-tags"><span class="tag tag-cafe">祕境花園</span><span class="tag tag-nature">綠意</span></div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-time">11:45 – 12:45</div>
-          <div class="timeline-title">MARS.cnx 火星咖啡廳</div>
-          <div class="timeline-desc">以太空與火星為主題的咖啡廳，銀白色太空艙、銀河系吧檯區與火星主題造景超好拍。位於古城區，開車約 15 分鐘。</div>
-          <div class="timeline-tags"><span class="tag tag-cafe">打卡</span></div>
         </div>
         <div class="timeline-item">
           <div class="timeline-time">12:30 – 13:30</div>
@@ -984,7 +992,6 @@ var PLACES_DATA = [
   { cat:'market', name:'周六夜市 Wua Lai', q:'Wua Lai Walking Street', note:'古城南門手工藝夜市' },
   { cat:'market', name:'真心市集 Jing Jai', q:'Jing Jai Market', note:'週末文創農產市集' },
   { cat:'cafe', name:'Fern Forest Cafe', q:'Fern Forest Cafe Chiang Mai', note:'古城祕境花園咖啡' },
-  { cat:'cafe', name:'MARS.cnx', q:'MARS.cnx cafe', note:'火星主題咖啡廳' },
   { cat:'nature', name:'Bua Tong 黏腳瀑布', q:'Bua Tong Sticky Waterfall', note:'可赤腳攀爬的石灰岩瀑布' },
   { cat:'market', name:'周日夜市 Sunday Walking Street', q:'Sunday Walking Street Chiang Mai', note:'古城最大夜市' },
   { cat:'cafe', name:'Fernpresso at Lake', q:'Fernpresso at Lake Chiang Mai', note:'湖畔咖啡 · Affogato' },
@@ -1110,8 +1117,36 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     search.addEventListener('input', function () { curText = search.value.trim().toLowerCase(); apply(); });
   })();
+
+  // ===== 圖片全圖檢視 Lightbox（點圖放大，再點一下關閉）=====
+  (function () {
+    var lb = document.getElementById('lightbox');
+    var lbImg = document.getElementById('lightboxImg');
+    if (!lb || !lbImg) return;
+    function open(src, alt) {
+      lbImg.src = src; lbImg.alt = alt || '';
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function close() {
+      lb.classList.remove('open');
+      document.body.style.overflow = '';
+      setTimeout(function () { if (!lb.classList.contains('open')) lbImg.src = ''; }, 300);
+    }
+    document.addEventListener('click', function (e) {
+      var img = e.target.closest && e.target.closest('.timeline-img, .elephant-img, .food-card img');
+      if (img) { e.preventDefault(); open(img.currentSrc || img.src, img.alt); }
+    });
+    lb.addEventListener('click', close);
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && lb.classList.contains('open')) close(); });
+  })();
 });
 </script>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="圖片全圖檢視">
+  <span class="lb-close" aria-hidden="true">×</span>
+  <img id="lightboxImg" src="" alt="">
+</div>
 
 </body>
 </html>
