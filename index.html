@@ -163,6 +163,23 @@
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
   ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
 
+  /* ===== 旅伴 Travelers ===== */
+  .travelers-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 20px 0; }
+  .traveler-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+    padding: 22px 14px; text-align: center; box-shadow: var(--shadow);
+    transition: transform .35s var(--spring), box-shadow .35s ease;
+  }
+  .traveler-card:hover { transform: translateY(-5px); box-shadow: 0 14px 34px rgba(0,0,0,0.14); }
+  .traveler-card .avatar { width: 84px; height: 84px; margin: 0 auto 12px; display: block; }
+  .traveler-card .avatar svg { width: 100%; height: 100%; display: block; }
+  .traveler-card:hover .avatar { animation: floatSlow 3.2s ease-in-out infinite; }
+  .traveler-card .t-name { font-size: 1.05rem; font-weight: 700; color: var(--heading); }
+  .traveler-card .t-role { font-size: 0.75rem; color: var(--text-light); margin-top: 3px; letter-spacing: .3px; }
+  .traveler-card .t-badge { display: inline-block; margin-top: 8px; font-size: 0.68rem; padding: 3px 10px; border-radius: 20px; background: var(--gold-light); color: #6d5200; font-weight: 600; }
+  html[data-theme="dark"] .traveler-card .t-badge { background: #3a3320; color: #e7cf8a; }
+  @media (max-width: 640px) { .travelers-grid { grid-template-columns: repeat(2, 1fr); } }
+
   /* ===== 頁面背景 ===== */
   body::before {
     content: ''; position: fixed; inset: 0; z-index: -2;
@@ -346,6 +363,79 @@
   <div class="reveal info-item"><div class="icon">🌧️</div><div class="label">天氣</div><div class="value">23–31°C 雨季</div></div>
 </div>
 
+<div class="section-title reveal"><div class="dot"></div>旅伴 Travelers</div>
+<p style="font-size:0.88rem;color:var(--text-light);margin:-8px 0 4px;">這趟清邁自駕的四位主角 — 一起餵象、泡湖、掃街吃遍米其林。</p>
+<div class="travelers-grid">
+  <div class="traveler-card reveal">
+    <span class="avatar">
+      <svg viewBox="0 0 100 100" role="img" aria-label="G.sats 頭像">
+        <circle cx="50" cy="50" r="48" fill="#2d6a4f"/>
+        <path d="M20 84a30 30 0 0 1 60 0z" fill="#c9a227"/>
+        <circle cx="50" cy="44" r="22" fill="#f6d5b0"/>
+        <path d="M28 40a22 22 0 0 1 44 0c0-14-9-22-22-22S28 26 28 40z" fill="#3a2a1a"/>
+        <circle cx="42" cy="45" r="3" fill="#3a2a1a"/><circle cx="58" cy="45" r="3" fill="#3a2a1a"/>
+        <path d="M43 55q7 6 14 0" stroke="#8d5a3c" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+      </svg>
+    </span>
+    <div class="t-name">G.sats</div>
+    <div class="t-role">MALE · 隊長</div>
+    <div class="t-badge">🚗 自駕手</div>
+  </div>
+  <div class="traveler-card reveal">
+    <span class="avatar">
+      <svg viewBox="0 0 100 100" role="img" aria-label="Gniw 頭像">
+        <circle cx="50" cy="50" r="48" fill="#e07a9c"/>
+        <path d="M20 84a30 30 0 0 1 60 0z" fill="#f5e6a3"/>
+        <circle cx="50" cy="46" r="21" fill="#f7d9bd"/>
+        <path d="M27 50c-3-20 8-34 23-34s26 14 23 34c2-6 2-16-3-16 0-10-8-16-20-16s-20 6-20 16c-5 0-5 10-3 16z" fill="#4a3320"/>
+        <path d="M27 46q-6 18 0 34l6-2q-5-16-2-30z" fill="#4a3320"/>
+        <path d="M73 46q6 18 0 34l-6-2q5-16 2-30z" fill="#4a3320"/>
+        <circle cx="42" cy="47" r="3" fill="#3a2a1a"/><circle cx="58" cy="47" r="3" fill="#3a2a1a"/>
+        <path d="M44 56q6 5 12 0" stroke="#c65b7c" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+        <path d="M64 30l6-4 3 6-6 2z" fill="#c9a227"/>
+      </svg>
+    </span>
+    <div class="t-name">Gniw</div>
+    <div class="t-role">FEMALE · 行程總監</div>
+    <div class="t-badge">📸 攝影擔當</div>
+  </div>
+  <div class="traveler-card reveal">
+    <span class="avatar">
+      <svg viewBox="0 0 100 100" role="img" aria-label="小白 頭像">
+        <circle cx="50" cy="50" r="48" fill="#7bb8d4"/>
+        <path d="M20 84a30 30 0 0 1 60 0z" fill="#ffffff"/>
+        <circle cx="50" cy="46" r="21" fill="#fbe3cf"/>
+        <path d="M29 44c0-16 9-26 21-26s21 10 21 26q4-2 4-8c0-16-10-24-25-24s-25 8-25 24c0 6 4 8 4 8z" fill="#2b2b3a"/>
+        <path d="M29 44v14l5 2V46z" fill="#2b2b3a"/><path d="M71 44v14l-5 2V46z" fill="#2b2b3a"/>
+        <circle cx="42" cy="47" r="3" fill="#3a2a1a"/><circle cx="58" cy="47" r="3" fill="#3a2a1a"/>
+        <circle cx="38" cy="53" r="3" fill="#f4a6b8" opacity="0.7"/><circle cx="62" cy="53" r="3" fill="#f4a6b8" opacity="0.7"/>
+        <path d="M45 56q5 4 10 0" stroke="#c65b7c" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+      </svg>
+    </span>
+    <div class="t-name">小白</div>
+    <div class="t-role">FEMALE · 美食雷達</div>
+    <div class="t-badge">🍜 覓食隊長</div>
+  </div>
+  <div class="traveler-card reveal">
+    <span class="avatar">
+      <svg viewBox="0 0 100 100" role="img" aria-label="San 頭像">
+        <circle cx="50" cy="50" r="48" fill="#6a8f6b"/>
+        <path d="M20 84a30 30 0 0 1 60 0z" fill="#d8f3dc"/>
+        <circle cx="50" cy="46" r="21" fill="#f7d9bd"/>
+        <path d="M30 40c0-14 9-22 20-22s20 8 20 22c3-2 4-8 4-12 0-14-10-20-24-20S26 14 26 28c0 4 1 10 4 12z" fill="#5a3a24"/>
+        <path d="M50 24c14 0 22 6 22 18l4-2c0-16-11-22-26-22S24 24 24 40l4 2c0-12 8-18 22-18z" fill="#5a3a24"/>
+        <circle cx="42" cy="47" r="3" fill="#3a2a1a"/><circle cx="58" cy="47" r="3" fill="#3a2a1a"/>
+        <path d="M44 56q6 4 12 0" stroke="#c65b7c" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+        <circle cx="30" cy="48" r="4" fill="#e6738f" opacity="0.55"/>
+      </svg>
+    </span>
+    <div class="t-name">San</div>
+    <div class="t-role">FEMALE · 財務大臣</div>
+    <div class="t-badge">💰 記帳擔當</div>
+  </div>
+
+</div>
+
 
 <div class="reveal elephant-section">
   <h3><span class="emoji">🐘</span> 行程亮點：Big Boy Elephant Sanctuary</h3>
@@ -370,8 +460,8 @@
     <div class="day-badge"><div class="num">1</div><div class="txt">DAY</div></div>
     <div class="day-info">
       <div class="date">9/10（四）抵達日</div>
-      <div class="title">機場取車 · 塔佩門 · 杭東大象咖啡 · 清邁夜市</div>
-      <div class="theme">古城地標 → Elefin Farm & Cafe → 長康路夜市</div>
+      <div class="title">機場取車 · 塔佩門 · 惠東濤湖 · 清邁夜市</div>
+      <div class="theme">古城地標 → Huay Tung Tao Lake → 長康路夜市</div>
     </div>
     <div class="day-toggle">▼</div>
   </div>
@@ -401,11 +491,9 @@
         </div>
         <div class="timeline-item">
           <div class="timeline-time">14:30 – 16:30</div>
-          <div class="timeline-title">杭東區 Elefin Farm & Cafe 大象咖啡廳</div>
-          <div class="timeline-desc">清邁治癒系天花板！位於杭東區山腰，自駕約 40 分鐘。無需入場費，花 100 銖買一籃香蕉即可近距離餵大象。大象溫順，還有可愛小象圍繞。綠植環繞的戶外座位與落地窗咖啡廳，抬眼即見山巒與大象悠遊。咖啡與泰式簡餐 60–120 銖，價格良心。建議早些時候前往，人少清靜。營業至 17:00。</div>
-          <img class="timeline-img" src="https://kimi-web-img.moonshot.cn/img/budgetcatcher.com/064fd88776c01455a7dbe909fd1f1cbca1bbd7aa.jpg" alt="Elefin Farm 餵大象">
-          <img class="timeline-img" src="https://kimi-web-img.moonshot.cn/img/budgetcatcher.com/8b35ba9c359a5b8a37a6e90a33fc8e1ed8f8bc11.jpg" alt="Elefin Farm 大象互動" style="margin-top:8px;">
-          <div class="timeline-tags"><span class="tag tag-farm">杭東農莊</span><span class="tag tag-highlight">必訪</span></div>
+          <div class="timeline-title">惠東濤湖 Huay Tung Tao Lake 湖畔放空</div>
+          <div class="timeline-desc">素帖山腳下的祕境水庫湖，距 The Earth Hotel 自駕約 20 分鐘。湖畔搭滿高腳竹亭，脫鞋盤腿躺著吹風、點泰式小食與冰啤，湖光山色超放鬆——當地人週末最愛的 chill 去處。可租小竹筏或環湖散步，也能踩水消暑。入園每人約 50 銖，竹亭低消隨意，最適合抵達首日卸下旅途疲憊、悠閒待到黃昏。</div>
+          <div class="timeline-tags"><span class="tag tag-nature">湖畔放空</span><span class="tag tag-highlight">chill 必訪</span></div>
         </div>
         <div class="timeline-item">
           <div class="timeline-time">18:00 – 21:00</div>
@@ -740,8 +828,8 @@
     <li><strong>雨季節奏：</strong>9 月為雨季尾段，平均氣溫 23–31°C。午後多短暫雷陣雨，建議上午安排戶外活動、下午轉室內，傍晚逛夜市。</li>
     <li><strong>駕照與租車：</strong>中國大陸駕照 + 英文翻譯件即可租車，建議同時攜帶國際駕照（IDP）備用。務必購買全險。</li>
     <li><strong>行車安全：</strong>泰國靠左行駛，Big Boy 與黏腳瀑布山路彎道多，雨天路滑請減速。市區救援約 20–40 分鐘，山區可能需 2 小時以上。</li>
-    <li><strong>杭東區自駕：</strong>Elefin Farm、Ohkajhu、Khaomao-Khaofang 與 Baan Tawai 皆位於杭東區，車程約 25–40 分鐘。山路蜿蜒，建議預留充足時間。</li>
-    <li><strong>Elefin Farm：</strong>無需入場費，100 銖買香蕉籃即可餵大象。建議上午或下午早些時候前往，人少清靜。營業至 17:00。</li>
+    <li><strong>杭東區自駕：</strong>Ohkajhu、Khaomao-Khaofang 與 Baan Tawai 皆位於杭東區，車程約 25–40 分鐘。山路蜿蜒，建議預留充足時間。</li>
+    <li><strong>惠東濤湖：</strong>入園每人約 50 銖，竹亭採低消制、餐點現點現做。建議帶防蚊液，午後或黃昏光線最美；雨季偶有陣雨，備把傘更安心。</li>
     <li><strong>Big Boy 預訂：</strong>需提前至少 24 小時在官網預訂。自駕前往請提前告知，他們會指定營地附近會合點。成人票價約 2,200 銖。</li>
     <li><strong>Big Boy 穿著：</strong>建議穿舒適耐髒的衣物與包鞋，帶防曬、防蚊液、泳衣與毛巾（如需參與洗澡活動）。</li>
     <li><strong>黏腳瀑布：</strong>完全免費！建議帶泳衣、毛巾與防水袋。瀑布岩石雖不滑但表面粗糙，建議穿溯溪鞋或赤腳。頂端有天然泳池可戲水。</li>
