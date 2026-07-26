@@ -166,13 +166,14 @@
   /* ===== 分頁 Tabs ===== */
   .tabbar {
     position: sticky; top: 0; z-index: 40;
-    display: flex; gap: 6px; justify-content: center;
-    padding: 10px; margin: 0 auto 6px; max-width: 900px;
+    display: flex; gap: 10px; justify-content: center;
+    padding: 12px 20px; margin: 0 calc(50% - 50vw) 10px; width: 100vw;
     background: rgba(255,255,255,0.6); backdrop-filter: blur(18px) saturate(180%);
     -webkit-backdrop-filter: blur(18px) saturate(180%);
     border-bottom: 1px solid var(--border);
   }
   html[data-theme="dark"] .tabbar { background: rgba(20,20,28,0.6); }
+  .tabbar button { flex: 1 1 0; max-width: 320px; text-align: center; }
   .tabbar button {
     -webkit-appearance: none; appearance: none; border: 0; cursor: pointer;
     padding: 9px 20px; border-radius: 999px; font-size: 0.92rem; font-weight: 600;
@@ -185,9 +186,7 @@
   .tab-panel { display: none; }
   .tab-panel.active { display: block; animation: fadeUp .5s var(--spring) both; }
   /* ===== 地圖分頁 ===== */
-  .map-embed { position: relative; width: 100%; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); background: var(--surface-2); }
-  .map-embed iframe { display: block; width: 100%; height: 460px; border: 0; }
-  .map-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0 4px; }
+  .map-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 4px; }
   .map-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 12px; background: var(--teal); color: #fff; font-weight: 600; font-size: .9rem; text-decoration: none; box-shadow: var(--shadow); transition: transform .3s var(--spring), box-shadow .3s; }
   .map-btn.alt { background: var(--surface); color: var(--heading); border: 1px solid var(--border); }
   .map-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,.14); }
@@ -213,7 +212,7 @@
   .place-card .p-note { font-size: .78rem; color: var(--text-light); margin-top: 5px; line-height: 1.5; }
   .place-card .p-go { margin-left: auto; align-self: center; color: var(--teal); font-size: 1.1rem; flex-shrink: 0; }
   .filter-empty { text-align: center; color: var(--text-light); font-size: .9rem; padding: 24px; display: none; }
-  @media (max-width: 640px) { .places-grid { grid-template-columns: 1fr; } .map-embed iframe { height: 380px; } }
+  @media (max-width: 640px) { .places-grid { grid-template-columns: 1fr; } }
 
   /* ===== 旅伴 Travelers ===== */
   .travelers-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 20px 0; }
@@ -539,8 +538,8 @@
     <div class="day-badge"><div class="num">1</div><div class="txt">DAY</div></div>
     <div class="day-info">
       <div class="date">9/10（四）抵達日</div>
-      <div class="title">機場取車 · 塔佩門 · 惠東濤湖 · 清邁夜市</div>
-      <div class="theme">古城地標 → Huay Tung Tao Lake → 長康路夜市</div>
+      <div class="title">機場取車 · 塔佩門 · 寧曼路 · 清邁夜市</div>
+      <div class="theme">古城地標 → 寧曼路散策 → 長康路夜市</div>
     </div>
     <div class="day-toggle">▼</div>
   </div>
@@ -549,15 +548,21 @@
       <div class="hotel-banner">🏨 宿：The Earth Hotel（Huai Kaew 路 · 昌普克 Chang Phueak 區，鄰寧曼與 Maya 百貨，距機場約 4km、車程 10 分鐘）</div>
       <div class="timeline">
         <div class="timeline-item">
-          <div class="timeline-time">07:45 – 09:30</div>
-          <div class="timeline-title">抵達清邁國際機場 · 取車</div>
-          <div class="timeline-desc">航班 07:45 抵達，通關後前往機場租車櫃檯取車。建議提前在 QEEQ 或 Localrent 預訂，機場取車最方便。取車後先導航至 The Earth Hotel（Huai Kaew 路）放行李，車程約 10 分鐘。</div>
+          <div class="timeline-time">07:45 – 10:00</div>
+          <div class="timeline-title">抵達清邁國際機場 · 早餐等候取車</div>
+          <div class="timeline-desc">航班 07:45 抵達。租車行最早 10:00 才能取車，通關後可先在機場或古城附近吃早餐、喝杯咖啡、換泰銖、辦電話卡，悠閒等候。建議提前在 QEEQ 或 Localrent 預訂並確認 10:00 的取車時段。</div>
+          <div class="timeline-tags"><span class="tag tag-drive">10:00 取車</span></div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">10:00 – 11:00</div>
+          <div class="timeline-title">機場取車 · 放行李</div>
+          <div class="timeline-desc">10:00 於機場租車櫃檯取車，導航至 The Earth Hotel（Huai Kaew 路）放行李，車程約 10 分鐘。若未到入住時間可先寄放行李。</div>
           <div class="timeline-tags"><span class="tag tag-drive">自駕</span></div>
         </div>
         <div class="timeline-item">
-          <div class="timeline-time">10:00 – 12:00</div>
+          <div class="timeline-time">11:15 – 12:30</div>
           <div class="timeline-title">塔佩門 Tha Phae Gate</div>
-          <div class="timeline-desc">清邁地標城門，紅磚廣場是餵鴿子與打卡的熱門地點。沿護城河漫步一圈，快速掌握古城輪廓。距酒店步行約 12 分鐘，自駕可停附近路邊。</div>
+          <div class="timeline-desc">清邁地標城門，紅磚廣場是餵鴿子與打卡的熱門地點。沿護城河漫步一圈，快速掌握古城輪廓。距酒店車程約 12 分鐘，自駕可停附近路邊。</div>
           <img class="timeline-img" src="https://kimi-web-img.moonshot.cn/img/catmotors.net/9458c66a292da808f95ac0309f700aeb65c319a5.jpg" alt="塔佩門">
           <div class="timeline-tags"><span class="tag tag-temple">地標</span></div>
         </div>
@@ -569,10 +574,10 @@
           <div class="timeline-tags"><span class="tag tag-food">必吃</span></div>
         </div>
         <div class="timeline-item">
-          <div class="timeline-time">14:30 – 16:30</div>
-          <div class="timeline-title">惠東濤湖 Huay Tung Tao Lake 湖畔放空</div>
-          <div class="timeline-desc">素帖山腳下的祕境水庫湖，距 The Earth Hotel 自駕約 20 分鐘。湖畔搭滿高腳竹亭，脫鞋盤腿躺著吹風、點泰式小食與冰啤，湖光山色超放鬆——當地人週末最愛的 chill 去處。可租小竹筏或環湖散步，也能踩水消暑。入園每人約 50 銖，竹亭低消隨意，最適合抵達首日卸下旅途疲憊、悠閒待到黃昏。</div>
-          <div class="timeline-tags"><span class="tag tag-nature">湖畔放空</span><span class="tag tag-highlight">chill 必訪</span></div>
+          <div class="timeline-time">14:30 – 17:30</div>
+          <div class="timeline-title">寧曼路散策 · One Nimman / Maya</div>
+          <div class="timeline-desc">酒店就在寧曼路旁，午後就近逛結合蘭納元素與現代設計的 One Nimman 與 Maya 百貨，選物店、文創小舖與咖啡廳林立，抵達首日輕鬆散策、避開午後陣雨。Maya 頂樓觀景平台可俯瞰市區，停車充裕。</div>
+          <div class="timeline-tags"><span class="tag tag-cafe">寧曼散策</span><span class="tag tag-market">選物</span></div>
         </div>
         <div class="timeline-item">
           <div class="timeline-time">18:00 – 21:00</div>
@@ -908,7 +913,7 @@
     <li><strong>駕照與租車：</strong>中國大陸駕照 + 英文翻譯件即可租車，建議同時攜帶國際駕照（IDP）備用。務必購買全險。</li>
     <li><strong>行車安全：</strong>泰國靠左行駛，Big Boy 與黏腳瀑布山路彎道多，雨天路滑請減速。市區救援約 20–40 分鐘，山區可能需 2 小時以上。</li>
     <li><strong>杭東區自駕：</strong>Ohkajhu、Khaomao-Khaofang 與 Baan Tawai 皆位於杭東區，車程約 25–40 分鐘。山路蜿蜒，建議預留充足時間。</li>
-    <li><strong>惠東濤湖：</strong>入園每人約 50 銖，竹亭採低消制、餐點現點現做。建議帶防蚊液，午後或黃昏光線最美；雨季偶有陣雨，備把傘更安心。</li>
+    <li><strong>抵達日取車：</strong>租車行最早 10:00 才能取車，航班 07:45 落地後可先吃早餐、換錢、辦電話卡，10:00 再取車最順。</li>
     <li><strong>Big Boy 預訂：</strong>需提前至少 24 小時在官網預訂。自駕前往請提前告知，他們會指定營地附近會合點。成人票價約 2,200 銖。</li>
     <li><strong>Big Boy 穿著：</strong>建議穿舒適耐髒的衣物與包鞋，帶防曬、防蚊液、泳衣與毛巾（如需參與洗澡活動）。</li>
     <li><strong>黏腳瀑布：</strong>完全免費！建議帶泳衣、毛巾與防水袋。瀑布岩石雖不滑但表面粗糙，建議穿溯溪鞋或赤腳。頂端有天然泳池可戲水。</li>
@@ -924,9 +929,6 @@
 <div class="tab-panel" id="panel-map" role="tabpanel" aria-labelledby="tab-map">
   <div class="section-title"><div class="dot"></div>我的清邁地圖清單</div>
   <p style="font-size:0.88rem;color:var(--text-light);margin:-8px 0 14px;">收藏的口袋名單 — 用下方搜尋與分類快速篩選，點卡片直接開 Google Maps 導航。</p>
-  <div class="map-embed">
-    <iframe id="mapFrame" src="https://www.google.com/maps/placelists/list/8nYEAsD9stjflbHOeLz_uSiDixZdpA?output=embed" title="我的清邁地圖清單" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
-  </div>
   <div class="map-actions">
     <a class="map-btn" href="https://www.google.com/maps/placelists/list/8nYEAsD9stjflbHOeLz_uSiDixZdpA?skid=c7ddfd34-c3b7-4698-8602-73dda2a05326&g_st=i" target="_blank" rel="noopener">📍 開啟我的完整清單</a>
     <a class="map-btn alt" href="https://www.google.com/maps/search/?api=1&query=Chiang+Mai" target="_blank" rel="noopener">🧭 在 Google Maps 開清邁</a>
@@ -952,7 +954,6 @@
 </div><!-- /panel-map -->
 
 <div class="footer">
-  清邁 5 日 4 夜自駕遊行程 · 2026 年 9 月 · 杭東農莊體驗版<br>
   圖片來源：Unsplash、TripAdvisor、Michelin Guide、YummyDelight、HappyCow、Budget Catcher 等<br>
   G.sats @2026
 </div>
@@ -972,7 +973,6 @@ var PLACES_DATA = [
   { cat:'stay', name:'The Earth Hotel', q:'The Earth Hotel Chiang Mai', note:'前兩晚 · Huai Kaew 路，近寧曼與古城' },
   { cat:'stay', name:'Veranda High Resort', q:'Veranda High Resort Chiang Mai MGallery', note:'後兩晚 · 杭東稻田山景度假村' },
   { cat:'sight', name:'塔佩門 Tha Phae Gate', q:'Tha Phae Gate', note:'古城紅磚地標，打卡熱點' },
-  { cat:'nature', name:'惠東濤湖 Huay Tung Tao', q:'Huay Tung Tao Lake', note:'素帖山腳竹亭湖景，chill 放空' },
   { cat:'market', name:'清邁夜市 Night Bazaar', q:'Chiang Mai Night Bazaar', note:'長康路每日夜市' },
   { cat:'nature', name:'Big Boy 大象保護區', q:'Big Boy Elephant Sanctuary Chiang Mai', note:'道德保育 · Doi Inthanon 附近' },
   { cat:'market', name:'瓦洛洛市場 Warorot', q:'Warorot Market', note:'最古老傳統市場，伴手禮划算' },
@@ -1068,23 +1068,6 @@ document.addEventListener('DOMContentLoaded', function () {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
     });
-  })();
-
-  // ===== 地圖嵌入：載入你的清單，失敗則退回一般清邁地圖 =====
-  (function () {
-    var f = document.getElementById('mapFrame');
-    if (!f) return;
-    var fallback = 'https://www.google.com/maps?q=Chiang+Mai,+Thailand&z=11&output=embed';
-    var ok = false;
-    f.addEventListener('load', function () { ok = true; });
-    // 若 6 秒內清單嵌入沒成功渲染（Google 可能拒絕內嵌收藏清單），改用一般地圖
-    setTimeout(function () {
-      try {
-        if (!ok || (f.contentDocument && f.contentDocument.body && f.contentDocument.body.innerHTML === '')) {
-          f.src = fallback;
-        }
-      } catch (e) { /* 跨域無法讀取代表已載入 Google 內容，視為成功 */ }
-    }, 6000);
   })();
 
   // ===== 地點篩選 Places filter =====
