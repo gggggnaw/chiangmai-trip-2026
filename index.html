@@ -180,6 +180,26 @@
   html[data-theme="dark"] .traveler-card .t-badge { background: #3a3320; color: #e7cf8a; }
   @media (max-width: 640px) { .travelers-grid { grid-template-columns: repeat(2, 1fr); } }
 
+  /* ===== 旅伴點擊動作（依角色）===== */
+  .traveler-card { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  .traveler-card .avatar { transform-origin: 50% 80%; }
+  .traveler-card .hint { display:block; font-size:0.64rem; color:var(--text-light); opacity:.6; margin-top:6px; }
+  /* G.sats — 開車：左右晃動＋輕微前傾 */
+  @keyframes moveDrive { 0%,100%{transform:translateX(0) rotate(0)} 20%{transform:translateX(-5px) rotate(-6deg)} 60%{transform:translateX(5px) rotate(6deg)} 80%{transform:translateX(-3px) rotate(-3deg)} }
+  .traveler-card.playing[data-move="drive"] .avatar { animation: moveDrive .5s ease-in-out 2; }
+  /* Gniw — 財務：上下彈跳點鈔（開心） */
+  @keyframes moveMoney { 0%,100%{transform:translateY(0)} 25%{transform:translateY(-10px)} 50%{transform:translateY(0)} 70%{transform:translateY(-6px)} }
+  .traveler-card.playing[data-move="money"] .avatar { animation: moveMoney .55s cubic-bezier(.3,1.4,.5,1) 2; }
+  /* San — 美食雷達：左右掃描擺頭 */
+  @keyframes moveRadar { 0%,100%{transform:rotate(0)} 25%{transform:rotate(-14deg)} 75%{transform:rotate(14deg)} }
+  .traveler-card.playing[data-move="radar"] .avatar { animation: moveRadar .8s ease-in-out 2; }
+  /* 小白 — 躺平：整個倒向一邊 */
+  @keyframes moveLieflat { 0%{transform:rotate(0) translateY(0)} 40%{transform:rotate(-82deg) translateY(6px)} 60%{transform:rotate(-82deg) translateY(6px)} 100%{transform:rotate(0) translateY(0)} }
+  .traveler-card.playing[data-move="lieflat"] .avatar { animation: moveLieflat 1.5s ease-in-out 1; }
+  @media (prefers-reduced-motion: reduce) {
+    .traveler-card.playing .avatar { animation: none !important; }
+  }
+
   /* ===== 頁面背景 ===== */
   body::before {
     content: ''; position: fixed; inset: 0; z-index: -2;
@@ -366,7 +386,7 @@
 <div class="section-title reveal"><div class="dot"></div>旅伴 Travelers</div>
 <p style="font-size:0.88rem;color:var(--text-light);margin:-8px 0 4px;">這趟清邁自駕的四位主角 — 一起餵象、泡湖、掃街吃遍米其林。</p>
 <div class="travelers-grid">
-  <div class="traveler-card reveal">
+  <div class="traveler-card reveal" data-move="drive">
     <span class="avatar">
       <svg viewBox="0 0 100 100" role="img" aria-label="G.sats 頭像">
         <rect x="4" y="4" width="92" height="92" rx="22" fill="#fbf7ee" stroke="#0e0e0e" stroke-width="3"/>
@@ -376,15 +396,19 @@
           <path d="M31 49C29 31 38 25 50 25s21 6 19 24c-1-6-4-9-4-9-4 3-9 4-11 4s-7-1-11-4c0 0-3 3-4 9z" fill="#0e0e0e"/>
           <path d="M33 41q17-8 34 0l-2 5q-15-6-30 0z" fill="#f64d1d"/>
         </g>
-        <circle cx="43" cy="47" r="2.6" fill="#0e0e0e"/><circle cx="57" cy="47" r="2.6" fill="#0e0e0e"/>
-        <path d="M44 56q6 5 12 0" stroke="#0e0e0e" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+        <rect x="37" y="44" width="11" height="9" rx="3" fill="#fff" stroke="#0e0e0e" stroke-width="2.4"/>
+        <rect x="52" y="44" width="11" height="9" rx="3" fill="#fff" stroke="#0e0e0e" stroke-width="2.4"/>
+        <path d="M48 48h4" stroke="#0e0e0e" stroke-width="2.4"/>
+        <circle cx="42.5" cy="48.5" r="2.4" fill="#0e0e0e"/><circle cx="57.5" cy="48.5" r="2.4" fill="#0e0e0e"/>
+        <path d="M44 58q6 5 12 0" stroke="#0e0e0e" stroke-width="2.6" fill="none" stroke-linecap="round"/>
       </svg>
     </span>
     <div class="t-name">G.sats</div>
     <div class="t-role">隊長 · 自駕手</div>
     <div class="t-badge">🚗 領隊駕駛</div>
+    <span class="hint">點我開車 →</span>
   </div>
-  <div class="traveler-card reveal">
+  <div class="traveler-card reveal" data-move="money">
     <span class="avatar">
       <svg viewBox="0 0 100 100" role="img" aria-label="Gniw 頭像">
         <rect x="4" y="4" width="92" height="92" rx="22" fill="#fbf7ee" stroke="#0e0e0e" stroke-width="3"/>
@@ -394,17 +418,18 @@
           <circle cx="50" cy="49" r="19" fill="#f6d9bf"/>
           <path d="M33 43q17-9 34 0" fill="#07416f"/>
         </g>
-        <rect x="37" y="46" width="11" height="9" rx="3" fill="none" stroke="#0e0e0e" stroke-width="2.4"/>
-        <rect x="52" y="46" width="11" height="9" rx="3" fill="none" stroke="#0e0e0e" stroke-width="2.4"/>
-        <path d="M48 50h4" stroke="#0e0e0e" stroke-width="2.4"/>
-        <path d="M45 62q5 4 10 0" stroke="#0e0e0e" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+        <circle cx="43" cy="49" r="2.8" fill="#0e0e0e"/><circle cx="57" cy="49" r="2.8" fill="#0e0e0e"/>
+        <circle cx="43.9" cy="48.1" r="0.9" fill="#fff"/><circle cx="57.9" cy="48.1" r="0.9" fill="#fff"/>
+        <circle cx="38" cy="55" r="3.4" fill="#f7a8b8"/><circle cx="62" cy="55" r="3.4" fill="#f7a8b8"/>
+        <path d="M45 57q5 4 10 0" stroke="#0e0e0e" stroke-width="2.6" fill="none" stroke-linecap="round"/>
       </svg>
     </span>
     <div class="t-name">Gniw</div>
     <div class="t-role">財務大臣</div>
     <div class="t-badge">💰 掌管旅費</div>
+    <span class="hint">點我數錢 ↕</span>
   </div>
-  <div class="traveler-card reveal">
+  <div class="traveler-card reveal" data-move="radar">
     <span class="avatar">
       <svg viewBox="0 0 100 100" role="img" aria-label="San 頭像">
         <rect x="4" y="4" width="92" height="92" rx="22" fill="#fbf7ee" stroke="#0e0e0e" stroke-width="3"/>
@@ -421,8 +446,9 @@
     <div class="t-name">San</div>
     <div class="t-role">美食雷達</div>
     <div class="t-badge">🍜 覓食嚮導</div>
+    <span class="hint">點我掃描 ↔</span>
   </div>
-  <div class="traveler-card reveal">
+  <div class="traveler-card reveal" data-move="lieflat">
     <span class="avatar">
       <svg viewBox="0 0 100 100" role="img" aria-label="小白 頭像">
         <rect x="4" y="4" width="92" height="92" rx="22" fill="#fbf7ee" stroke="#0e0e0e" stroke-width="3"/>
@@ -444,6 +470,7 @@
     <div class="t-name">小白</div>
     <div class="t-role">躺平專員</div>
     <div class="t-badge">😴 佛系隨行</div>
+    <span class="hint">點我躺平 ↓</span>
   </div>
 
 </div>
@@ -896,6 +923,19 @@ document.addEventListener('DOMContentLoaded', function () {
       mq.addEventListener('change', function () { if (currentChoice() === 'system') apply('system'); });
     }
     apply(currentChoice());
+  })();
+
+  // ===== 旅伴點擊：依角色播放動作 =====
+  (function () {
+    var dur = { drive:1000, money:1100, radar:1600, lieflat:1500 };
+    document.querySelectorAll('.traveler-card[data-move]').forEach(function (card) {
+      card.addEventListener('click', function () {
+        if (card.classList.contains('playing')) return;
+        card.classList.add('playing');
+        var m = card.getAttribute('data-move');
+        setTimeout(function () { card.classList.remove('playing'); }, (dur[m] || 1200) + 60);
+      });
+    });
   })();
 
   var els = document.querySelectorAll('.reveal');
