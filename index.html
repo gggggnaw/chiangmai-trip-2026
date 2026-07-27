@@ -438,20 +438,23 @@
     background: var(--surface); color: var(--gold);
     box-shadow: 0 2px 8px rgba(0,0,0,0.16);
   }
-  /* roll-to-expand: trigger always visible, options roll open horizontally */
-  .theme-trigger { position: relative; z-index: 1; }
-  .theme-toggle.open .theme-trigger { background: var(--surface); box-shadow: 0 2px 8px rgba(0,0,0,0.16); }
+  /* roll-to-expand: closed = only the trigger; open = only the 3 options (no duplicate) */
+  .theme-trigger {
+    position: relative; z-index: 1;
+    max-width: 34px; overflow: hidden;
+    transition: max-width 0.35s var(--spring), opacity 0.25s ease, transform 0.12s var(--spring), background 0.3s ease, color 0.3s ease;
+  }
+  .theme-toggle.open .theme-trigger { max-width: 0; opacity: 0; pointer-events: none; margin: 0; }
   .theme-options {
     display: flex; align-items: center; gap: 2px;
     max-width: 0; opacity: 0; overflow: hidden; transform-origin: right center;
-    transition: max-width 0.4s var(--spring), opacity 0.3s ease, margin 0.4s var(--spring);
-    margin-left: 0;
+    transition: max-width 0.4s var(--spring), opacity 0.3s ease;
   }
-  .theme-toggle.open .theme-options { max-width: 120px; opacity: 1; margin-left: 2px; }
-  .theme-options button { transform: scale(0.6); transition: transform 0.35s var(--spring), background 0.3s ease, color 0.3s ease; }
+  .theme-toggle.open .theme-options { max-width: 120px; opacity: 1; }
+  .theme-options button { transform: scale(0.7); transition: transform 0.35s var(--spring), background 0.3s ease, color 0.3s ease; }
   .theme-toggle.open .theme-options button { transform: scale(1); }
   @media (prefers-reduced-motion: reduce) {
-    .theme-toggle, .theme-toggle button, .theme-options { transition: none; }
+    .theme-toggle, .theme-toggle button, .theme-options, .theme-trigger { transition: none; }
     .theme-options button { transform: none; }
   }
 
