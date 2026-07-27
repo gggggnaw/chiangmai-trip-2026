@@ -61,7 +61,7 @@
   .hero-content { position: relative; z-index: 2; padding: 0 24px; max-width: 900px; margin-top: clamp(96px, 16vh, 168px); }
   .hero h1 { font-size: clamp(2.2rem, 7vw, 5rem); font-weight: 500; line-height: 0.98; margin-bottom: 22px; letter-spacing: -0.035em; color: #274d34; text-shadow: 0 1px 12px rgba(255,255,255,0.35); }
   .hero h1 .accent { color: #5f9169; }
-  html[data-theme="dark"] .hero h1 { color: #f2fbf3; text-shadow: 0 2px 16px rgba(0,0,0,0.75), 0 1px 3px rgba(0,0,0,0.6); }
+  html[data-theme="dark"] .hero h1 { color: #f2fbf3; text-shadow: 0 1px 8px rgba(0,0,0,0.45), 0 1px 2px rgba(0,0,0,0.35); }
   html[data-theme="dark"] .hero h1 .accent { color: #b0dcb6; }
   .hero .subtitle { font-size: clamp(0.95rem, 2.2vw, 1.2rem); font-weight: 500; color: #33452f; margin: 0 auto 26px; max-width: 560px; line-height: 1.6; text-shadow: 0 1px 8px rgba(255,255,255,0.4); }
   html[data-theme="dark"] .hero .subtitle { color: #eef6ec; text-shadow: 0 1px 10px rgba(0,0,0,0.7); }
@@ -412,7 +412,7 @@
   /* ===== 主題切換 Theme toggle ===== */
   .theme-toggle {
     position: fixed; top: 16px; right: 16px; z-index: 50;
-    display: flex; gap: 2px; padding: 4px;
+    display: flex; align-items: center; gap: 2px; padding: 4px;
     background: rgba(255,255,255,0.55);
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
@@ -427,7 +427,7 @@
   }
   .theme-toggle button {
     -webkit-appearance: none; appearance: none; border: 0; cursor: pointer;
-    width: 34px; height: 34px; border-radius: 999px;
+    width: 34px; height: 34px; flex: 0 0 34px; border-radius: 999px;
     display: flex; align-items: center; justify-content: center;
     background: transparent; color: var(--text-light); font-size: 1rem; line-height: 1;
     -webkit-tap-highlight-color: transparent;
@@ -438,8 +438,21 @@
     background: var(--surface); color: var(--gold);
     box-shadow: 0 2px 8px rgba(0,0,0,0.16);
   }
+  /* roll-to-expand: trigger always visible, options roll open horizontally */
+  .theme-trigger { position: relative; z-index: 1; }
+  .theme-toggle.open .theme-trigger { background: var(--surface); box-shadow: 0 2px 8px rgba(0,0,0,0.16); }
+  .theme-options {
+    display: flex; align-items: center; gap: 2px;
+    max-width: 0; opacity: 0; overflow: hidden; transform-origin: right center;
+    transition: max-width 0.4s var(--spring), opacity 0.3s ease, margin 0.4s var(--spring);
+    margin-left: 0;
+  }
+  .theme-toggle.open .theme-options { max-width: 120px; opacity: 1; margin-left: 2px; }
+  .theme-options button { transform: scale(0.6); transition: transform 0.35s var(--spring), background 0.3s ease, color 0.3s ease; }
+  .theme-toggle.open .theme-options button { transform: scale(1); }
   @media (prefers-reduced-motion: reduce) {
-    .theme-toggle, .theme-toggle button { transition: none; }
+    .theme-toggle, .theme-toggle button, .theme-options { transition: none; }
+    .theme-options button { transform: none; }
   }
 
   /* ===== 深色模式細節校正 ===== */
@@ -482,10 +495,13 @@
 </head>
 <body>
 
-<div class="theme-toggle" role="group" aria-label="主題切換">
-  <button type="button" data-theme-choice="light" title="淺色" aria-label="淺色主題">☀️</button>
-  <button type="button" data-theme-choice="system" title="跟隨系統" aria-label="跟隨系統">🖥️</button>
-  <button type="button" data-theme-choice="dark" title="深色" aria-label="深色主題">🌙</button>
+<div class="theme-toggle" id="themeToggle" role="group" aria-label="主題切換">
+  <button type="button" class="theme-trigger" id="themeTrigger" aria-expanded="false" aria-label="開啟主題選單" title="主題">🖥️</button>
+  <div class="theme-options" id="themeOptions">
+    <button type="button" data-theme-choice="light" title="淺色" aria-label="淺色主題">☀️</button>
+    <button type="button" data-theme-choice="system" title="跟隨系統" aria-label="跟隨系統">🖥️</button>
+    <button type="button" data-theme-choice="dark" title="深色" aria-label="深色主題">🌙</button>
+  </div>
 </div>
 
 <div class="hero">
@@ -1135,10 +1151,13 @@ var PLACES_DATA = [
 ];
 
 document.addEventListener('DOMContentLoaded', function () {
-  // ===== 主題切換：淺色 / 跟隨系統 / 深色 =====
+  // ===== 主題切換：淺色 / 跟隨系統 / 深色（可捲動展開／收合）=====
   (function () {
     var mq = window.matchMedia('(prefers-color-scheme: dark)');
+    var wrap = document.getElementById('themeToggle');
+    var trigger = document.getElementById('themeTrigger');
     var buttons = document.querySelectorAll('.theme-toggle [data-theme-choice]');
+    var ICON = { light: '☀️', system: '🖥️', dark: '🌙' };
     function currentChoice() {
       try { return localStorage.getItem('cnx-theme') || 'system'; } catch (e) { return 'system'; }
     }
@@ -1148,13 +1167,34 @@ document.addEventListener('DOMContentLoaded', function () {
       buttons.forEach(function (b) {
         b.setAttribute('aria-pressed', b.getAttribute('data-theme-choice') === choice ? 'true' : 'false');
       });
+      if (trigger) trigger.textContent = ICON[choice] || ICON.system;
+    }
+    function setOpen(open) {
+      if (!wrap || !trigger) return;
+      wrap.classList.toggle('open', open);
+      trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      trigger.setAttribute('aria-label', open ? '收合主題選單' : '開啟主題選單');
+    }
+    if (trigger) {
+      trigger.addEventListener('click', function (e) {
+        e.stopPropagation();
+        setOpen(!wrap.classList.contains('open'));
+      });
     }
     buttons.forEach(function (b) {
       b.addEventListener('click', function () {
         var choice = b.getAttribute('data-theme-choice');
         try { localStorage.setItem('cnx-theme', choice); } catch (e) {}
         apply(choice);
+        setOpen(false); // 選擇後自動最小化
       });
+    });
+    // 點擊外部或按 Esc 收合
+    document.addEventListener('click', function (e) {
+      if (wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) setOpen(false);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && wrap && wrap.classList.contains('open')) setOpen(false);
     });
     if (mq.addEventListener) {
       mq.addEventListener('change', function () { if (currentChoice() === 'system') apply('system'); });
