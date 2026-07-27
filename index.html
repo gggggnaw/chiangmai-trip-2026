@@ -110,7 +110,8 @@
   .day-badge { width: 56px; height: 56px; background: var(--teal); color: #fff; border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; }
   .day-badge .num { font-size: 1.4rem; font-weight: 700; line-height: 1; }
   .day-badge .txt { font-size: 0.65rem; font-weight: 500; opacity: 0.9; }
-  .day-info { flex: 1; }
+  .day-info { flex: 1 1 auto; min-width: 0; }
+  .day-info .title { overflow-wrap: break-word; word-break: break-word; }
   .day-info .date { font-size: 0.85rem; color: var(--text-light); margin-bottom: 2px; }
   .day-info .title { font-size: 1.15rem; font-weight: 700; color: var(--heading); letter-spacing: -0.005em; }
   .day-info .theme { font-size: 0.85rem; color: var(--text-light); margin-top: 4px; }
@@ -124,7 +125,7 @@
   .day-weather .w-sep { width: 1px; height: 12px; background: var(--border); }
   .day-weather.loading { opacity: .6; }
   .day-weather .w-src { font-size: .68rem; opacity: .75; }
-  .day-toggle { width: 32px; height: 32px; border-radius: 50%; background: var(--cream); display: flex; align-items: center; justify-content: center; transition: transform 0.4s var(--spring), background 0.35s ease; color: var(--teal); align-self: flex-start; }
+  .day-toggle { width: 32px; height: 32px; flex: 0 0 32px; box-sizing: border-box; border-radius: 50%; background: var(--cream); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; line-height: 1; transition: transform 0.4s var(--spring), background 0.35s ease; color: var(--teal); align-self: flex-start; }
   .day-card.open .day-toggle { transform: rotate(180deg); }
   .day-body { max-height: 0; overflow: hidden; transition: max-height 0.5s var(--spring); }
   .day-card.open .day-body { max-height: 3000px; }
@@ -193,7 +194,7 @@
   @media (max-width: 640px) {
     .hero h1 { font-size: 2rem; } .flight-grid { grid-template-columns: 1fr; } .info-bar { grid-template-columns: 1fr; }
     .car-grid { grid-template-columns: 1fr; } .elephant-grid { grid-template-columns: 1fr; } .food-grid { grid-template-columns: 1fr; }
-    .day-header { padding: 16px; } .timeline-img { height: 160px; } .elephant-img { height: 180px; }
+    .day-header { padding: 16px; gap: 12px; } .day-info .title { font-size: 1.02rem; } .timeline-img { height: 160px; } .elephant-img { height: 180px; }
     .tabbar { gap: 6px; padding: 10px 12px; }
     .tabbar button { padding: 8px 12px; font-size: 0.82rem; }
   }
